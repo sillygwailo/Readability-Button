@@ -45,7 +45,6 @@ function readability_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('readability_admin_settings'),
     'access arguments' => array('administer readability'),
-    'file' => 'readability.admin.inc',
     'type' => MENU_NORMAL_ITEM,
   );
   return $items;
