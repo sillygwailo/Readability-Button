@@ -66,10 +66,11 @@ function readability_theme() {
  * Implements hook_node_view().
  */
 function readability_node_view($node, $view_mode, $langcode) {
-  if ($view_mode == 'full' && user_access('access readability')) {
+  $enable_readability = variable_get('readability_button_enable_' . $node->type, 0);
+  if ($enable_readability && $view_mode == 'full' && user_access('access readability')) {
     $node->content['readability'] = array(
       '#object' => $node,
-      '#weight' => -5,
+      '#weight' => variable_get('readability_button_weight_' . $node->type, 0),
       '#theme' => 'readability_display__' . $node->type,
     );
   }
@@ -87,4 +88,33 @@ function theme_readability_display($variables) {
   })();
   </script>";
   return $readability; 
+}
+
+
+function readability_form_node_type_form_alter(&$form, $form_state) {
+  $form['readability'] = array(
+    '#type' => 'fieldset',
+    '#title' => 'Readability settings',
+    '#weight' => 25,
+    '#group' => 'additional_settings',
+  );
+  $form['readability']['button'] = array(
+      '#type' => 'fieldset',
+      '#title' => 'Readability button settings',
+      '#collapsible' => FALSE,
+      '#collapsed' => FALSE,
+      '#weight' => 1,
+      '#group' => 'readability',
+  );
+  $form['readability']['button']['readability_button_enable'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Enable readability button'),
+    '#default_value' => variable_get('readability_button_enable_' . $form['#node_type']->type, 0),
+    '#description' => t('Check this box to enable the Readability button for this node type.'),    
+  );
+  $form['readability']['button']['readability_button_weight'] = array(
+    '#type' => 'select',
+    '#default_value' => variable_get('readability_button_weight_' . $form['#node_type']->type, 0),
+    '#options' => drupal_map_assoc(range(-10, 10)),
+  );
 }
