@@ -1,0 +1,30 @@
+; $Id$
+name = Readability
+description = "Adds the JavaScript code for Readbility"
+
+; Core version (required)
+core = 7.x
+
+; Package name (see http://drupal.org/node/542202 for a list of names)
+; package = 
+
+; PHP version requirement (optional)
+; php = 5.2
+
+; Loadable code files
+files[] = readability.module
+; files[] = readability.admin.inc
+; files[] = readability.class.inc
+
+; Module dependencies
+; dependencies[] = mymodule
+; dependencies[] = theirmodule (1.2)
+; dependencies[] = anothermodule (>=2.4)
+; dependencies[] = views (3.x)
+
+; Configuration page
+; configure = admin/config/readability
+
+
+; For further information about configuration options, see
+; - http://drupal.org/node/542202

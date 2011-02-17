@@ -1,0 +1,77 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ * Adds a Read: Now | Later button for nodes
+ */
+
+/**
+ * Implements hook_permission().
+ */
+function readability_permission() {
+  return array(
+    'administer readability' =>  array(
+      'title' => t('Administer Readability settings'),
+      'description' => t('Change the weight and node types on which the button appears'),
+    ),
+    'access readability button' => array(
+      'title' => t('Access Readability button'),
+    )
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function readability_menu() {
+  $items = array();
+  $items['admin/config/services/readability'] = array(
+    'title' => 'Readability Button',
+    'description' => 'Configure the look and behavior of the Readability Button on the site.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('readability_admin_settings'),
+    'access arguments' => array('administer readability'),
+    'file' => 'readability.admin.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+/**
+ * Implementation of hook_theme()
+ */
+function readability_theme() {
+	return array(
+    'readability_display' => array(
+      'variables' => array('object' => NULL, 'options' => array()),
+    ),
+  );
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function readability_node_view($node, $view_mode, $langcode) {
+  if ($view_mode == 'full' && user_access('access readability')) {
+    $node->content['readability'] = array(
+      '#object' => $node,
+      '#weight' => -5,
+      '#theme' => 'readability_display__' . $node->type,
+    );
+  }
+}
+
+function theme_readability_display($variables) {
+  $readability = "<div id='rdbWrapper'></div><script type='text/javascript'>
+  (function() {
+      var s     = document.getElementsByTagName('script')[0],
+          rdb   = document.createElement('script');
+      rdb.type  = 'text/javascript';
+      rdb.async = true;
+      rdb.src   = document.location.protocol + '//www.readability.com/embed.js';
+      s.parentNode.insertBefore(rdb, s);
+  })();
+  </script>";
+  return $readability; 
+}
