@@ -1,8 +1,6 @@
 ; $Id$
 name = Readability
 description = "Adds the JavaScript code for Readbility"
-
-; Core version (required)
 core = 7.x
 files[] = readability.module
-files[] = readability.admin.inc
+
