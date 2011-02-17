@@ -55,7 +55,7 @@ function readability_menu() {
  * Implementation of hook_theme()
  */
 function readability_theme() {
-	return array(
+  return array(
     'readability_display' => array(
       'variables' => array('object' => NULL, 'options' => array()),
     ),
