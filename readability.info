@@ -1,6 +1,5 @@
 ; $Id$
 name = Readability
 description = "Adds the JavaScript code for Readbility"
-core = 7.x
-files[] = readability.module
+core = 6.x
 
