@@ -11,7 +11,7 @@
  */
 function readability_init() {
   if (variable_get('readability_verify_domain', 0)) {
-    drupal_set_html_head(variable_get('readability_verification'));
+    drupal_set_html_head(variable_get('readability_verification', ''));
   }
 }
 
@@ -66,7 +66,7 @@ function readability_nodeapi(&$node, $op) {
   }
 }
 
-function theme_readability_display($variables) {
+function theme_readability_display() {
   $readability = "<div id='rdbWrapper'></div><script type='text/javascript'>
   (function() {
       var s     = document.getElementsByTagName('script')[0],
