@@ -9,9 +9,9 @@
 /**
  * Implements hook_init().
  */
-function readability_init() {
-  if (variable_get('readability_verify_domain', 0)) {
-    drupal_set_html_head(variable_get('readability_verification', ''));
+function readability_button_init() {
+  if (variable_get('readability_button_verify_domain', 0)) {
+    drupal_set_html_head(variable_get('readability_button_erification', ''));
   }
 }
 
@@ -25,13 +25,13 @@ function readability_perm() {
 /**
  * Implements hook_menu().
  */
-function readability_menu() {
+function readability_button_menu() {
   $items = array();
   $items['admin/settings/readability_button'] = array(
     'title' => 'Readability Button',
     'description' => 'Configure the look and behavior of the Readability button on the site.',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('readability_admin_settings'),
+    'page arguments' => array('readability_button_admin_settings'),
     'access arguments' => array('administer readability'),
     'type' => MENU_NORMAL_ITEM,
   );
@@ -41,9 +41,9 @@ function readability_menu() {
 /**
  * Implementation of hook_theme()
  */
-function readability_theme() {
+function readability_button_theme() {
   return array(
-    'readability_display' => array(
+    'readability_button_display' => array(
       'variables' => array('object' => NULL, 'options' => array()),
     ),
   );
@@ -52,21 +52,21 @@ function readability_theme() {
 /**
  * Implements hook_nodeapi().
  */
-function readability_nodeapi(&$node, $op) {
+function readability_button_nodeapi(&$node, $op) {
   switch ($op) {
     case 'view':
       $enable_readability = variable_get('readability_button_enable_' . $node->type, 0);
       if ($enable_readability && (arg(0) == 'node' && is_numeric(arg(1)) && !arg(2)) && user_access('access readability button')) {
         $node->content['readability'] = array(
           '#weight' => variable_get('readability_button_weight_' . $node->type, 0),
-          '#value' => theme('readability_display'),
+          '#value' => theme('readability_button_display'),
       );
       break;
     }
   }
 }
 
-function theme_readability_display() {
+function theme_readability_button_display() {
   $readability = "<div id='rdbWrapper'></div><script type='text/javascript'>
   (function() {
       var s     = document.getElementsByTagName('script')[0],
@@ -83,30 +83,30 @@ function theme_readability_display() {
 /**
  * General configuration form for the Readability button
  */
-function readability_admin_settings() {
+function readability_button_admin_settings() {
   $form = array();
   $form['verification'] = array(
     '#type' => 'fieldset',
     '#title' => t('Readability site verifcation'),
   );
-  $form['verification']['readability_verification'] = array(
+  $form['verification']['readability_button_verification'] = array(
     '#title' => t('Verification code'),
     '#description' => t('Copy the code from http://www.readability.com/ under domain validation, which should be in the format of &lt;meta name="readability-verification" content="[VERIFICATION CODE]"/&gt;'),
     '#type' => 'textfield',
-    '#default_value' => variable_get('readability_verification', '<meta name="readability-verification" content="[VERIFICATION CODE]"/>'),
+    '#default_value' => variable_get('readability_button_verification', '<meta name="readability-verification" content="[VERIFICATION CODE]"/>'),
     '#size' => 75,
     '#max_length' => 255,
   );
-  $form['verification']['readability_verify_domain'] = array(
+  $form['verification']['readability_button_verify_domain'] = array(
     '#type' => 'checkbox',
     '#title' => t('Verify domain?'),
     '#description' => t("Check this box if you wish the verification code to appear in your site's HTML header"),
-    '#default_value' => variable_get('readability_verify_domain', 0),
+    '#default_value' => variable_get('readability_button_verify_domain', 0),
   );
   return system_settings_form($form);
 }
 
-function readability_form_alter(&$form, $form_state, $form_id) {
+function readability_button_form_alter(&$form, $form_state, $form_id) {
   if ($form_id == 'node_type_form') {
     $form['readability'] = array(
       '#type' => 'fieldset',
