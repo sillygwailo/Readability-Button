@@ -18,7 +18,7 @@ function readability_button_init() {
 /**
  * Implements hook_perm().
  */
-function readability_perm() {
+function readability_button_perm() {
   return array('administer readability', 'access readability button');
 }
 
