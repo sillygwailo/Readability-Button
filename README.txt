@@ -11,11 +11,11 @@ VERIFICATION
 1. if you haven't already, sign up for a publisher account at Readability https://www.readability.com/
 2. after signing up, start the process to claim your domain at the Readability website. If your site is at http://www.example.com/, use example.com
 3. copy the verification code to your computer's clipboard
-4. visit admin/config/services/readability in your Drupal site and replace the default HTML code with the HTML Readability gave you
+4. visit admin/config/services/readability_button in your Drupal site and replace the default HTML code with the HTML Readability gave you
 5. check the "Verify domain?" button
 6. make sure the HTML code appears in your website. Clear your Drupal cache just in case. You'll need to logout to become the anonymous user to be absolutely sure the Readability web service can see your HTML code
 7. go back to the Readability site and ask Readability to verify your site
-8. back at your Drupal site, through admin/config/services/readability uncheck "Verify domain?" (since you don't need the code anymore)
+8. back at your Drupal site, through admin/config/services/readability_button uncheck "Verify domain?" (since you don't need the code anymore)
 
 CONFIGURATION
 =============

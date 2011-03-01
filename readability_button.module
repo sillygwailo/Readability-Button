@@ -9,20 +9,20 @@
 /**
  * Implements hook_init().
  */
-function readability_init() {
-  if (variable_get('readability_verify_domain', 0)) {
+function readability_button_init() {
+  if (variable_get('readability_button_verify_domain', 0)) {
     $verification = array(
       '#type' => 'markup',
-      '#markup' => variable_get('readability_verification'),
+      '#markup' => variable_get('readability_button_verification'),
     );
-    drupal_add_html_head($verification, 'readability_verification');
+    drupal_add_html_head($verification, 'readability_button_verification');
   }
 }
 
 /**
  * Implements hook_permission().
  */
-function readability_permission() {
+function readability_button_permission() {
   return array(
     'administer readability' =>  array(
       'title' => t('Administer Readability settings'),
@@ -37,13 +37,13 @@ function readability_permission() {
 /**
  * Implements hook_menu().
  */
-function readability_menu() {
+function readability_button_menu() {
   $items = array();
   $items['admin/config/services/readability'] = array(
     'title' => 'Readability Button',
     'description' => 'Configure the look and behavior of the Readability Button on the site.',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('readability_admin_settings'),
+    'page arguments' => array('readability_button_admin_settings'),
     'access arguments' => array('administer readability'),
     'type' => MENU_NORMAL_ITEM,
   );
@@ -53,9 +53,9 @@ function readability_menu() {
 /**
  * Implementation of hook_theme()
  */
-function readability_theme() {
+function readability_button_theme() {
   return array(
-    'readability_display' => array(
+    'readability_button_display' => array(
       'variables' => array('object' => NULL, 'options' => array()),
     ),
   );
@@ -64,18 +64,18 @@ function readability_theme() {
 /**
  * Implements hook_node_view().
  */
-function readability_node_view($node, $view_mode, $langcode) {
+function readability_button_node_view($node, $view_mode, $langcode) {
   $enable_readability = variable_get('readability_button_enable_' . $node->type, 0);
   if ($enable_readability && $view_mode == 'full' && user_access('access readability button')) {
     $node->content['readability'] = array(
       '#object' => $node,
       '#weight' => variable_get('readability_button_weight_' . $node->type, 0),
-      '#theme' => 'readability_display__' . $node->type,
+      '#theme' => 'readability_button_display__' . $node->type,
     );
   }
 }
 
-function theme_readability_display($variables) {
+function theme_readability_button_display($variables) {
   $readability = "<div id='rdbWrapper'></div><script type='text/javascript'>
   (function() {
       var s     = document.getElementsByTagName('script')[0],
@@ -92,30 +92,30 @@ function theme_readability_display($variables) {
 /**
  * General configuration form for the Readability button
  */
-function readability_admin_settings() {
+function readability_button_admin_settings() {
   $form = array();
   $form['verification'] = array(
     '#type' => 'fieldset',
     '#title' => t('Readability site verifcation'),
   );
-  $form['verification']['readability_verification'] = array(
+  $form['verification']['readability_button_verification'] = array(
     '#title' => t('Verification code'),
     '#description' => t('Copy the code from http://www.readability.com/ under domain validation, which should be in the format of &lt;meta name="readability-verification" content="[VERIFICATION CODE]"/&gt;'),
     '#type' => 'textfield',
-    '#default_value' => variable_get('readability_verification', '<meta name="readability-verification" content="[VERIFICATION CODE]"/>'),
+    '#default_value' => variable_get('readability_button_verification', '<meta name="readability-verification" content="[VERIFICATION CODE]"/>'),
     '#size' => 125,
     '#max_length' => 255,
   );
-  $form['verification']['readability_verify_domain'] = array(
+  $form['verification']['readability_button_verify_domain'] = array(
     '#type' => 'checkbox',
     '#title' => t('Verify domain?'),
     '#description' => t("Check this box if you wish the verification code to appear in your site's HTML header"),
-    '#default_value' => variable_get('readability_verify_domain', 0),
+    '#default_value' => variable_get('readability_button_verify_domain', 0),
   );
   return system_settings_form($form);
 }
 
-function readability_form_node_type_form_alter(&$form, $form_state) {
+function readability_button_form_node_type_form_alter(&$form, $form_state) {
   $form['readability'] = array(
     '#type' => 'fieldset',
     '#title' => 'Readability settings',
