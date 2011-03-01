@@ -1,5 +1,5 @@
 ; $Id$
-name = Readability
-description = "Adds the JavaScript code for Readbility"
+name = Readability Button
+description = "Adds the JavaScript code for Readability"
 core = 6.x
 
