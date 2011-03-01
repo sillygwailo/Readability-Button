@@ -27,9 +27,9 @@ function readability_perm() {
  */
 function readability_menu() {
   $items = array();
-  $items['admin/settings/readability'] = array(
+  $items['admin/settings/readability_button'] = array(
     'title' => 'Readability Button',
-    'description' => 'Configure the look and behavior of the Readability Button on the site.',
+    'description' => 'Configure the look and behavior of the Readability button on the site.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('readability_admin_settings'),
     'access arguments' => array('administer readability'),
@@ -126,9 +126,9 @@ function readability_form_alter(&$form, $form_state, $form_id) {
     );
     $form['readability']['button']['readability_button_enable'] = array(
       '#type' => 'checkbox',
-      '#title' => t('Enable readability button'),
+      '#title' => t('Enable Readability button'),
       '#default_value' => variable_get('readability_button_enable_' . $form['#node_type']->type, 0),
-      '#description' => t('Check this box to enable the Readability button for this node type.'),    
+      '#description' => t('Check this box to enable the Read Now | Later button for this content type.'),    
     );
     $form['readability']['button']['readability_button_weight'] = array(
       '#type' => 'select',
