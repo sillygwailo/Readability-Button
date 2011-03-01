@@ -132,9 +132,9 @@ function readability_form_node_type_form_alter(&$form, $form_state) {
   );
   $form['readability']['button']['readability_button_enable'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Enable readability button'),
+    '#title' => t('Enable Readability button'),
     '#default_value' => variable_get('readability_button_enable_' . $form['#node_type']->type, 0),
-    '#description' => t('Check this box to enable the Readability button for this node type.'),    
+    '#description' => t('Check this box to enable the Read Now | Later button for this content type.'),    
   );
   $form['readability']['button']['readability_button_weight'] = array(
     '#type' => 'select',
