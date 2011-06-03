@@ -118,7 +118,7 @@ function readability_button_form_alter(&$form, $form_state, $form_id) {
   if ($form_id == 'node_type_form') {
     $form['readability'] = array(
       '#type' => 'fieldset',
-      '#title' => 'Readability settings',
+      '#title' => t('Readability settings'),
       '#weight' => 25,
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
