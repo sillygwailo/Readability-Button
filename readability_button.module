@@ -67,16 +67,17 @@ function readability_button_nodeapi(&$node, $op) {
 }
 
 function theme_readability_button_display() {
-  $readability = "<div id='rdbWrapper'></div><script type='text/javascript'>
-  (function() {
+  $readability = "<div class='rdbWrapper'></div><script type='text/javascript'>
+    (function() {
       var s     = document.getElementsByTagName('script')[0],
-          rdb   = document.createElement('script');
+        rdb   = document.createElement('script');
       rdb.type  = 'text/javascript';
       rdb.async = true;
       rdb.src   = document.location.protocol + '//www.readability.com/embed.js';
       s.parentNode.insertBefore(rdb, s);
-  })();
+    })();
   </script>";
+
   return $readability; 
 }
 
