@@ -59,25 +59,32 @@ function readability_button_nodeapi(&$node, $op) {
       if ($enable_readability && (arg(0) == 'node' && is_numeric(arg(1)) && !arg(2)) && user_access('access readability button')) {
         $node->content['readability'] = array(
           '#weight' => variable_get('readability_button_weight_' . $node->type, 0),
-          '#value' => theme('readability_button_display'),
+          '#value' => theme('readability_button_display', $node->type),
       );
       break;
     }
   }
 }
 
-function theme_readability_button_display() {
-  $readability = "<div class='rdbWrapper'></div><script type='text/javascript'>
-    (function() {
+function theme_readability_button_display($node_type) {
+  $enable_readability_kindle = variable_get('readability_button_kindle_enable_' . $node_type, 0);
+  if ($enable_readability_kindle) {
+    $readability = "<div class='rdbWrapper' data-show-send-to-kindle='1' data-show-read='1'></div> ";
+  }
+  else {
+    $readability = "<div class='rdbWrapper'></div>";    
+  }
+ 
+  $readability .= "<script type='text/javascript'>
+      (function() {
       var s     = document.getElementsByTagName('script')[0],
-        rdb   = document.createElement('script');
+          rdb   = document.createElement('script');
       rdb.type  = 'text/javascript';
       rdb.async = true;
       rdb.src   = document.location.protocol + '//www.readability.com/embed.js';
       s.parentNode.insertBefore(rdb, s);
-    })();
+      })();
   </script>";
-
   return $readability; 
 }
 
@@ -130,6 +137,12 @@ function readability_button_form_alter(&$form, $form_state, $form_id) {
       '#title' => t('Enable Readability button'),
       '#default_value' => variable_get('readability_button_enable_' . $form['#node_type']->type, 0),
       '#description' => t('Check this box to enable the Read Now | Later button for this content type.'),    
+    );
+    $form['readability']['button']['readability_button_kindle_enable'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Enable Readability "Send to Kindle" button'),
+      '#default_value' => variable_get('readability_button_kindle_enable_' . $form['#node_type']->type, 0),
+      '#description' => t('Check this box to enable the "Send to Kindle" button for this content type.'),    
     );
     $form['readability']['button']['readability_button_weight'] = array(
       '#type' => 'select',
