@@ -127,13 +127,13 @@ function readability_button_admin_settings() {
 function readability_button_form_node_type_form_alter(&$form, $form_state) {
   $form['readability'] = array(
     '#type' => 'fieldset',
-    '#title' => 'Readability settings',
+    '#title' => t('Readability settings'),
     '#weight' => 25,
     '#group' => 'additional_settings',
   );
   $form['readability']['button'] = array(
       '#type' => 'fieldset',
-      '#title' => 'Readability button settings',
+      '#title' => t('Readability button settings'),
       '#collapsible' => FALSE,
       '#collapsed' => FALSE,
       '#weight' => 1,
