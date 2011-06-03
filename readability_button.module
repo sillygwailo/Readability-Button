@@ -126,7 +126,7 @@ function readability_button_form_alter(&$form, $form_state, $form_id) {
     );
     $form['readability']['button'] = array(
         '#type' => 'fieldset',
-        '#title' => 'Readability button settings',
+        '#title' => t('Readability button settings'),
         '#collapsible' => FALSE,
         '#collapsed' => FALSE,
         '#weight' => 1,
