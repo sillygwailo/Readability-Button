@@ -23,8 +23,9 @@ CONFIGURATION
 1. login to your website as an administrator
 2. visit the content types screen at admin/structure/types
 3. for each content type that you would like to show a Readability button:
-  1. click the "edit" operation for the content type
-  2. select the "Readability settings" tab
-  3. check "Enable Readability button" box
-  4. select a weight for the button. This will determine where the button will appear. You will probably want a weight less than zero (a minus number) so that it appears above content.
+  i. click the "edit" operation for the content type
+  ii. select the "Readability settings" tab
+  iii. check "Enable Readability button" box
+  iv. optional: check the "Enable Readability 'Send to Kindle' button" box
+  v. select a weight for the button. This will determine where the button will appear. You will probably want a weight less than zero (a minus number) so that it appears above content.
 4. visit a node from the content type to verify that the button appears. You may want to visit content in each role that you've given permission to.
