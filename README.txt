@@ -14,17 +14,18 @@ VERIFICATION
 1. if you haven't already, sign up for a publisher account at Readability
    https://www.readability.com/
 2. after signing up, start the process to claim your domain at the Readability
-   website. If your site is at http://www.example.com/, use example.com
-3. copy the verification code to your computer's clipboard
+   website. If your site's URL is http://www.example.com/, use example.com
+3. copy the entire verification code to your computer's clipboard
 4. visit admin/settings/readability_button in your Drupal site and replace 
    the default HTML code with the HTML Readability gave you
-5. check the "Verify domain?" button
+5. check the "Verify domain?" box
 6. make sure the HTML code appears in your website. Clear your Drupal cache
-   just in case. You'll need to logout to become the anonymous user to be
-   absolutely sure the Readability web service can see your HTML code
+   just in case. You'll need to logout to become the anonymous user to see
+   the HTML code that Readability will see
 7. go back to the Readability site and ask Readability to verify your site
-8. back at your Drupal site, through admin/settings/readability_button uncheck 
-   "Verify domain?" (since you don't need the code anymore)
+8. once verified, back at your Drupal site, through 
+   admin/config/services/readability_button uncheck "Verify domain?" (since 
+   you don't need the code anymore)
 
 CONFIGURATION
 =============
@@ -32,12 +33,13 @@ CONFIGURATION
 1. login to your website as an administrator
 2. visit the content types screen at admin/content/types
 3. for each content type that you would like to show a Readability button:
-  i. click the "edit" operation for the content type
+  i. click the "edit" operation link for the content type
   ii. drop down the "Readability settings" section
   iii. check the "Enable Readability button" box
   iv. optional: check the "Enable Readability 'Send to Kindle'" box
   v. select a weight for the button. This will determine where the button 
-     will appear. You will probably want a weight less than zero (a minus 
+     will appear. You will probably want a weight less than zero (a negative 
      number) so that it appears above content.
 4. visit a node from the content type to verify that the button appears. You
-   may want to visit content in each role that you've given permission to.
+   may want to visit content in each role that you've given the "Access
+   Readability button" permission to
