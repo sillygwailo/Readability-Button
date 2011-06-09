@@ -1,6 +1,6 @@
 ; $Id$
-name = Readability
+name = Readability Button
 description = "Adds the JavaScript code for Readbility"
 core = 7.x
-files[] = readability.module
+files[] = readability_button.module
 
