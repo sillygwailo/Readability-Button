@@ -1,6 +1,6 @@
 ; $Id$
 name = Readability Button
-description = "Adds the JavaScript code for Readability"
+description = "Adds the JavaScript code for Readbility"
 core = 7.x
-files[] = readability.module
-configure = admin/config/services/readability
+files[] = readability_button.module
+
