@@ -13,6 +13,7 @@ function readability_button_init() {
   if (variable_get('readability_button_verify_domain', 0)) {
     drupal_set_html_head(variable_get('readability_button_verification', ''));
   }
+  drupal_add_js(drupal_get_path('module', 'readability_button') . '/readability_button.js');
 }
 
 /**
@@ -56,7 +57,8 @@ function readability_button_nodeapi(&$node, $op) {
   switch ($op) {
     case 'view':
       $enable_readability = variable_get('readability_button_enable_' . $node->type, 0);
-      if ($enable_readability && (arg(0) == 'node' && is_numeric(arg(1)) && !arg(2)) && user_access('access readability button')) {
+      $show = ((arg(0) == 'node' && is_numeric(arg(1)) && !arg(2)) || (variable_get('readability_button_show_list_' . $node->type, 0)));
+      if ($enable_readability && $show && user_access('access readability button')) {
         $node->content['readability'] = array(
           '#weight' => variable_get('readability_button_weight_' . $node->type, 0),
           '#value' => theme('readability_button_display', $node->type),
@@ -67,24 +69,18 @@ function readability_button_nodeapi(&$node, $op) {
 }
 
 function theme_readability_button_display($node_type) {
+  global $base_url;
   $enable_readability_kindle = variable_get('readability_button_kindle_enable_' . $node_type, 0);
+  $data_url = "data-url='" . $base_url . url('node/' . $variables['object']->nid) . "'";  
   if ($enable_readability_kindle) {
-    $readability = "<div class='rdbWrapper' data-show-send-to-kindle='1' data-show-read='1'></div> ";
+    $readability = "<div class='rdbWrapper' ";
+    $readability .= $data_url;
+    $readability .= " data-show-send-to-kindle='1' data-show-read='1'></div> ";
   }
   else {
-    $readability = "<div class='rdbWrapper'></div>";    
+    $readability = "<div class='rdbWrapper' " . $data_url . "></div>";
   }
- 
-  $readability .= "<script type='text/javascript'>
-      (function() {
-      var s     = document.getElementsByTagName('script')[0],
-          rdb   = document.createElement('script');
-      rdb.type  = 'text/javascript';
-      rdb.async = true;
-      rdb.src   = document.location.protocol + '//www.readability.com/embed.js';
-      s.parentNode.insertBefore(rdb, s);
-      })();
-  </script>";
+
   return $readability; 
 }
 
@@ -137,6 +133,12 @@ function readability_button_form_alter(&$form, $form_state, $form_id) {
       '#title' => t('Enable Readability button'),
       '#default_value' => variable_get('readability_button_enable_' . $form['#node_type']->type, 0),
       '#description' => t('Check this box to enable the Read Now | Later button for this content type.'),    
+    );
+    $form['readability']['button']['readability_button_show_list'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Enable Readability button on lists'),
+      '#default_value' => variable_get('readability_button_show_list_' . $form['#node_type']->type, 0),
+      '#description' => t('Check this box to enable the Read Now | Later button for lists of content that include this content type. An example of a list is the blog page or taxonomy term views.'),    
     );
     $form['readability']['button']['readability_button_kindle_enable'] = array(
       '#type' => 'checkbox',
