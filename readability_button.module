@@ -11,7 +11,7 @@
  */
 function readability_button_init() {
   if (variable_get('readability_button_verify_domain', 0)) {
-    drupal_set_html_head(variable_get('readability_button_erification', ''));
+    drupal_set_html_head(variable_get('readability_button_verification', ''));
   }
 }
 
