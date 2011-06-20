@@ -76,26 +76,21 @@ function readability_button_node_view($node, $view_mode, $langcode) {
 }
 
 function theme_readability_button_display($variables) {
+  global $base_url;
   $node_type = $variables['object']->type;
   $enable_readability_kindle = variable_get('readability_button_kindle_enable_' . $node_type, 0);
+  $data_url = "data-url='" . $base_url . url('node/' . $variables['object']->nid) . "'";  
   if ($enable_readability_kindle) {
-    $readability = "<div class='rdbWrapper' data-show-send-to-kindle='1' data-show-read='1'></div> ";
+    $readability = "<div class='rdbWrapper' ";
+    $readability .= $data_url;
+    $readability .= " data-show-send-to-kindle='1' data-show-read='1'></div> ";
   }
   else {
-    $readability = "<div class='rdbWrapper'></div>";    
+    $readability = "<div class='rdbWrapper' " . $data_url . "></div>";
   }
+  drupal_add_js(drupal_get_path('module', 'readability_button') . '/readability_button.js', 'file');
 
-  $readability .= "<script type='text/javascript'>
-      (function() {
-      var s     = document.getElementsByTagName('script')[0],
-          rdb   = document.createElement('script');
-      rdb.type  = 'text/javascript';
-      rdb.async = true;
-      rdb.src   = document.location.protocol + '//www.readability.com/embed.js';
-      s.parentNode.insertBefore(rdb, s);
-      })();
-  </script>";
-  return $readability; 
+  return $readability;
 }
 
 /**
