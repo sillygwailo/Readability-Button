@@ -10,7 +10,7 @@
  * Implements hook_init().
  */
 function readability_button_init() {
-  if (variable_get('readability_verify_domain', 0)) {
+  if (variable_get('readability_button_verify_domain', 0)) {
     $verification = array(
       '#type' => 'markup',
       '#markup' => variable_get('readability_button_verification'),
