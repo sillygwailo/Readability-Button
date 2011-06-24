@@ -61,24 +61,24 @@ function readability_button_nodeapi(&$node, $op) {
       if ($enable_readability && $show && user_access('access readability button')) {
         $node->content['readability'] = array(
           '#weight' => variable_get('readability_button_weight_' . $node->type, 0),
-          '#value' => theme('readability_button_display', $node->type),
+          '#value' => theme('readability_button_display', $node->type, $node->nid),
       );
       break;
     }
   }
 }
 
-function theme_readability_button_display($node_type) {
+function theme_readability_button_display($node_type, $nid) {
   global $base_url;
   $enable_readability_kindle = variable_get('readability_button_kindle_enable_' . $node_type, 0);
-  $data_url = "data-url='" . $base_url . url('node/' . $variables['object']->nid) . "'";  
+  $data_url = 'data-url="' . $base_url . url('node/' . $nid) . '"';  
   if ($enable_readability_kindle) {
-    $readability = "<div class='rdbWrapper' ";
+    $readability = '<div class="rdbWrapper" ';
     $readability .= $data_url;
-    $readability .= " data-show-send-to-kindle='1' data-show-read='1'></div> ";
+    $readability .= ' data-show-send-to-kindle="1" data-show-read="1"></div> ';
   }
   else {
-    $readability = "<div class='rdbWrapper' " . $data_url . "></div>";
+    $readability = '<div class="rdbWrapper" ' . $data_url . '></div>';
   }
 
   return $readability; 
