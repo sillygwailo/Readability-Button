@@ -70,16 +70,16 @@ function readability_button_nodeapi(&$node, $op) {
 
 function theme_readability_button_display($node_type, $nid) {
   global $base_url;
-  $enable_readability_kindle = variable_get('readability_button_kindle_enable_' . $node_type, 0);
-  $data_url = 'data-url="' . $base_url . url('node/' . $nid) . '"';  
-  if ($enable_readability_kindle) {
-    $readability = '<div class="rdbWrapper" ';
-    $readability .= $data_url;
-    $readability .= ' data-show-send-to-kindle="1" data-show-read="1"></div> ';
-  }
-  else {
-    $readability = '<div class="rdbWrapper" ' . $data_url . '></div>';
-  }
+  $node_type = $node_type;
+  $wrapper_attributes = array();
+  $wrapper_attributes['class'] = 'rdbWrapper';
+  $wrapper_attributes['data-url'] = $base_url . url('node/' . $nid);
+  $wrapper_attributes['data-show-email'] = variable_get('readability_button_kindle_enable_' . $node_type, 0);
+  $wrapper_attributes['data-show-print'] = variable_get('readability_button_print_enable_' . $node_type, 0);
+  $wrapper_attributes['data-show-email'] = variable_get('readability_button_email_enable_' . $node_type, 0);
+  $wrapper_attributes['data-show-send-to-kindle'] = variable_get('readability_button_kindle_enable_' . $node_type, 0);
+  $wrapper_attributes_html = drupal_attributes($wrapper_attributes);
+  $readability = '<div' . $wrapper_attributes_html . '></div>';
 
   return $readability; 
 }
@@ -139,6 +139,18 @@ function readability_button_form_alter(&$form, $form_state, $form_id) {
       '#title' => t('Enable Readability button on lists'),
       '#default_value' => variable_get('readability_button_show_list_' . $form['#node_type']->type, 0),
       '#description' => t('Check this box to enable the Read Now | Later button for lists of content that include this content type. An example of a list is the blog page or taxonomy term views.'),    
+    );
+    $form['readability']['button']['readability_button_print_enable'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Enable Readability Print button'),
+      '#default_value' => variable_get('readability_button_print_enable_' . $form['#node_type']->type, 0),
+      '#description' => t('Check this box to enable the Print button for this content type.'),    
+    );
+    $form['readability']['button']['readability_button_email_enable'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Enable Readability Email button'),
+      '#default_value' => variable_get('readability_button_email_enable_' . $form['#node_type']->type, 0),
+      '#description' => t('Check this box to enable the Email button for this content type.'),    
     );
     $form['readability']['button']['readability_button_kindle_enable'] = array(
       '#type' => 'checkbox',
