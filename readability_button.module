@@ -88,6 +88,7 @@ function theme_readability_button_display($variables) {
   $wrapper_attributes['data-show-send-to-kindle'] = variable_get('readability_button_kindle_enable_' . $node_type, 0);
   $wrapper_attributes['data-text-color'] = '#' . variable_get('readability_button_text_color_' . $node_type, '5C5C5C');
   $wrapper_attributes['data-bg-color'] = '#' . variable_get('readability_button_background_color_' . $node_type, 'F3F3F3');
+  $wrapper_attributes['data-orientation'] = variable_get('readability_button_orientation_' . $node_type, 0);
   $wrapper_attributes_html = drupal_attributes($wrapper_attributes);
   $readability = '<div' . $wrapper_attributes_html . '></div>';
   drupal_add_js(drupal_get_path('module', 'readability_button') . '/readability_button.js', 'file');
@@ -189,6 +190,12 @@ function readability_button_form_node_type_form_alter(&$form, $form_state) {
     '#default_value' => variable_get('readability_button_background_color_' . $form['#node_type']->type, 'F3F3F3'),
   );
   $form['readability']['button']['readability_button_background_color'] += $color_form_attributes;
+  $form['readability']['button']['readability_button_orientation'] = array(
+    '#type' => 'radios',
+    '#title' => t('Orientation'),
+    '#default_value' => variable_get('readability_button_orientation_' . $form['#node_type']->type, 0),
+    '#options' => array(t('Horizontal'), t('Vertical')),
+  );
   $form['readability']['button']['readability_button_weight'] = array(
     '#type' => 'select',
     '#default_value' => variable_get('readability_button_weight_' . $form['#node_type']->type, 0),
