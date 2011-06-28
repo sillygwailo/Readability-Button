@@ -181,12 +181,12 @@ function readability_button_form_node_type_form_alter(&$form, $form_state) {
   }
   $form['readability']['button']['readability_button_text_color'] = array(
     '#title' => t('Text color'),
-    '#default_value' => '5C5C5C',
+    '#default_value' => variable_get('readability_button_text_color_' . $form['#node_type']->type, '5C5C5C'),
   );
   $form['readability']['button']['readability_button_text_color'] += $color_form_attributes;
   $form['readability']['button']['readability_button_background_color']  = array(
     '#title' => t('Background color'),
-    '#default_value' => 'F3F3F3',
+    '#default_value' => variable_get('readability_button_background_color_' . $form['#node_type']->type, 'F3F3F3'),
   );
   $form['readability']['button']['readability_button_background_color'] += $color_form_attributes;
   $form['readability']['button']['readability_button_weight'] = array(
