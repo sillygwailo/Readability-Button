@@ -41,5 +41,6 @@ CONFIGURATION
      appear. You will probably want a weight less than zero (a negative number)
      so that it appears above content.
 4. visit a node from the content type to verify that the button appears. You
-   may want to visit content in each role that you've given the "Access 
-   Readability button" permission to.
+   may need to clear your site's cache and then want to visit content in each 
+   role that you've given the "Access Readability button" permission to.
+
