@@ -79,29 +79,16 @@ function readability_button_node_view($node, $view_mode, $langcode) {
 function theme_readability_button_display($variables) {
   global $base_url;
   $node_type = $variables['object']->type;
-  $data_url = "data-url='" . $base_url . url('node/' . $variables['object']->nid) . "'";
-  $readability = "<div class='rdbWrapper' ";
-  $buttons = array(
-    'email' => array(
-      'data-show-email' => variable_get('readability_button_kindle_enable_' . $node_type, 0),
-    ),
-    'print' => array(
-      'data-show-print' => variable_get('readability_button_print_enable_' . $node_type, 0),
-    ),
-    'email' => array(
-    'data-show-email' => variable_get('readability_button_email_enable_' . $node_type, 0),
-    ),
-    'kindle' => array(
-      'data-show-send-to-kindle' => variable_get('readability_button_kindle_enable_' . $node_type, 0),
-    ),
-  );
-  $button_attributes = array();
-  foreach ($buttons as $button) {
-    $button_attributes[] = drupal_attributes($button);
-  }
-  $readability .= implode(' ', $button_attributes);
+  $wrapper_attributes = array();
+  $wrapper_attributes['class'] = 'rdbWrapper';
+  $wrapper_attributes['data-url'] = $base_url . url('node/' . $variables['object']->nid);
+  $wrapper_attributes['data-show-email'] = variable_get('readability_button_kindle_enable_' . $node_type, 0);
+  $wrapper_attributes['data-show-print'] = variable_get('readability_button_print_enable_' . $node_type, 0);
+  $wrapper_attributes['data-show-email'] = variable_get('readability_button_email_enable_' . $node_type, 0);
+  $wrapper_attributes['data-show-send-to-kindle'] = variable_get('readability_button_kindle_enable_' . $node_type, 0);
+  $wrapper_attributes_html = drupal_attributes($wrapper_attributes);
+  $readability = '<div' . $wrapper_attributes_html . '></div>';
   drupal_add_js(drupal_get_path('module', 'readability_button') . '/readability_button.js', 'file');
-  $readability .= $data_url . "></div>";
 
   return $readability;
 }
