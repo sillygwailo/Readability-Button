@@ -78,6 +78,9 @@ function theme_readability_button_display($node_type, $nid) {
   $wrapper_attributes['data-show-print'] = variable_get('readability_button_print_enable_' . $node_type, 0);
   $wrapper_attributes['data-show-email'] = variable_get('readability_button_email_enable_' . $node_type, 0);
   $wrapper_attributes['data-show-send-to-kindle'] = variable_get('readability_button_kindle_enable_' . $node_type, 0);
+  $wrapper_attributes['data-text-color'] = '#' . variable_get('readability_button_text_color_' . $node_type, '5C5C5C');
+  $wrapper_attributes['data-bg-color'] = '#' . variable_get('readability_button_background_color_' . $node_type, 'F3F3F3');
+  $wrapper_attributes['data-orientation'] = variable_get('readability_button_orientation_' . $node_type, 0);
   $wrapper_attributes_html = drupal_attributes($wrapper_attributes);
   $readability = '<div' . $wrapper_attributes_html . '></div>';
 
@@ -157,6 +160,34 @@ function readability_button_form_alter(&$form, $form_state, $form_id) {
       '#title' => t('Enable Readability "Send to Kindle" button'),
       '#default_value' => variable_get('readability_button_kindle_enable_' . $form['#node_type']->type, 0),
       '#description' => t('Check this box to enable the "Send to Kindle" button for this content type.'),    
+    );
+    if (module_exists('jquery_colorpicker')) {
+      $color_form_attributes = array(
+        '#type' => 'colorpicker',
+      );
+    }
+    else {
+      $color_form_attributes = array(
+        '#type' => 'textfield',
+        '#maxlength' => 6,
+        '#description' => t('Type in the hexidecimal HTML code for the color you want, without the number sign (#).'),
+      );
+    }
+    $form['readability']['button']['readability_button_text_color'] = array(
+      '#title' => t('Text color'),
+      '#default_value' => variable_get('readability_button_text_color_' . $form['#node_type']->type, '5C5C5C'),
+    );
+    $form['readability']['button']['readability_button_text_color'] += $color_form_attributes;
+    $form['readability']['button']['readability_button_background_color']  = array(
+      '#title' => t('Background color'),
+      '#default_value' => variable_get('readability_button_background_color_' . $form['#node_type']->type, 'F3F3F3'),
+    );
+    $form['readability']['button']['readability_button_background_color'] += $color_form_attributes;
+    $form['readability']['button']['readability_button_orientation'] = array(
+      '#type' => 'radios',
+      '#title' => t('Orientation'),
+      '#default_value' => variable_get('readability_button_orientation_' . $form['#node_type']->type, 0),
+      '#options' => array(t('Horizontal'), t('Vertical')),
     );
     $form['readability']['button']['readability_button_weight'] = array(
       '#type' => 'select',
